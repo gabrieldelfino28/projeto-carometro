@@ -5,22 +5,23 @@ import java.util.Scanner;
 
 import controller.AlunoController;
 import model.Aluno;
+import model.Comentario;
 import model.Historico;
 import model.Link;
 
 public class Main {
-static AlunoController control;
+	
 	public static void main(String[] args) {
-		control = new AlunoController();
-		
+		AlunoController control = new AlunoController();
 		Scanner scanner = new Scanner(System.in);
 		String option = " ";
 		Aluno al;
 		Historico h;
 		Link link;
+		Comentario c;
 		
 		do {
-			System.out.print("Menu: " + "\n1- Novo Registro no Carômetro." + "\n2- Atualizar Registro no Carômetro."
+			System.out.println("Menu: " + "\n1- Novo Registro no Carômetro." + "\n2- Atualizar Registro no Carômetro."
 					+ "\n3- Consultar um Registro." + "\n4- Listar todos." + "\n9- Sair.");
 			System.out.print("\nEscolha uma opção: ");
 			option = scanner.next();
@@ -33,6 +34,11 @@ static AlunoController control;
 				LocalDate dataClose = LocalDate.of(2021, 7, 30);
 				h = new Historico("Google", "Analista de TI", dataCont, dataClose, "Desenvolvedor Junior", al);
 				control.inserirHistorico(h);
+				
+				link = new Link("github", "https://github.com/gabrieldelfino28", al);
+				c = new Comentario("Fatec", "Socorro", al);
+				control.inserirLink(link);
+				control.inserirComentario(c);
 				
 				System.out.println("\nCarometro Cadastrado.");
 				break;

@@ -17,6 +17,7 @@ public class Comentario implements Serializable {
 	private long id;
 	private String categoria;
 	private LocalDate data;
+	private String conteudo;
 
 	public Comentario() {
 		super();
@@ -25,20 +26,16 @@ public class Comentario implements Serializable {
 	@ManyToOne
 	private Aluno aluno;
 
-	public Comentario(long id, String categoria, Aluno aluno) {
+	public Comentario(String categoria, String conteudo, Aluno aluno) {
 		super();
-		this.id = id;
 		this.categoria = categoria;
 		this.data = LocalDate.now();
+		this.conteudo = conteudo;
 		this.aluno = aluno;
 	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getCategoria() {
@@ -55,5 +52,21 @@ public class Comentario implements Serializable {
 
 	public void setData(LocalDate data) {
 		this.data = data;
+	}
+
+	public String getConteudo() {
+		return conteudo;
+	}
+
+	public void setConteudo(String conteudo) {
+		this.conteudo = conteudo;
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 }
