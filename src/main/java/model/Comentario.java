@@ -8,15 +8,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="comentario")
 public class Comentario implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String categoria;
-	private LocalDate data;
+	private LocalDate data = LocalDate.now();
 	private String conteudo;
 
 	public Comentario() {
@@ -29,7 +31,6 @@ public class Comentario implements Serializable {
 	public Comentario(String categoria, String conteudo, Aluno aluno) {
 		super();
 		this.categoria = categoria;
-		this.data = LocalDate.now();
 		this.conteudo = conteudo;
 		this.aluno = aluno;
 	}

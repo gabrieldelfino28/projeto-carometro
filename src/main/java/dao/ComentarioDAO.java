@@ -57,10 +57,10 @@ public class ComentarioDAO implements IDAO<Comentario>{
 	}
 
 	@Override
-	public List<Comentario> apenasUm(String categoria) {
+	public List<Comentario> apenasUm(Long aluno_id) {
 		EntityManager em = mf.createEntityManager();
-		List<Comentario> comentarios = em.createQuery("SELECT c FROM Comentario c WHERE c. LIKE :categoria", Comentario.class)
-				.setParameter("categoria", "%" + categoria + "%")
+		List<Comentario> comentarios = em.createQuery("SELECT c FROM Comentario c WHERE c.aluno_id LIKE :aluno_id", Comentario.class)
+				.setParameter("id", aluno_id)
 				.getResultList();
 		em.close();
 		return comentarios;

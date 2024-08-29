@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import dao.AlunoDAO;
 import dao.ComentarioDAO;
 import dao.HistoricoDAO;
@@ -30,6 +32,16 @@ public class AlunoController {
 	
 	public void inserirComentario(Comentario com) {
 		comDAO.inserir(com);
+	}
+	
+	public List<Aluno> buscarAluno(Long id) {
+		List<Aluno> al = alunoDAO.apenasUm(id);
+		return al;
+	}
+	
+	public List<Aluno> listarTodos() {
+		List<Aluno> al = alunoDAO.listar();
+		return al;
 	}
 	
 }

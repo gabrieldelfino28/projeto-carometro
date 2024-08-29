@@ -3,14 +3,15 @@ package model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@Entity(name = "historico")
+@Entity
+@Table(name="historico")
 public class Historico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -23,7 +24,7 @@ public class Historico implements Serializable {
 	private LocalDate dataDesligamento;
 	private String funcao;
 
-	@ManyToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne()
 	private Aluno aluno;
 
 	public Historico() {

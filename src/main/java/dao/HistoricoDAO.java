@@ -28,26 +28,41 @@ public class HistoricoDAO implements IDAO<Historico>{
 
 	@Override
 	public void atualizar(Historico h) {
-		// TODO Auto-generated method stub
-		
+		EntityManager em = mf.createEntityManager();
+		em.getTransaction().begin();
+		em.merge(h);
+		em.getTransaction().commit();
+		em.close();
 	}
 
 	@Override
 	public void remover(long id) {
-		// TODO Auto-generated method stub
-		
+		EntityManager em = mf.createEntityManager();
+		em.getTransaction().begin();
+		Historico historico = em.find(Historico.class, id);
+		if (historico != null) {
+			em.remove(historico);
+		}
+		em.getTransaction().commit();
+		em.close();
 	}
 
 	@Override
 	public List<Historico> listar() {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = mf.createEntityManager();
+		List<Historico> historicos = em.createQuery("SELECT h FROM Historico h", Historico.class).getResultList();
+		em.close();
+		return historicos;
 	}
 
 	@Override
-	public List<Historico> apenasUm(String nome) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Historico> apenasUm(Long aluno_id) {
+		EntityManager em = mf.createEntityManager();
+		List<Historico> historicos = em.createQuery("SELECT h FROM Historico h WHERE c.aluno_id LIKE :aluno_id", Historico.class)
+				.setParameter("aluno_id", aluno_id)
+				.getResultList();
+		em.close();
+		return historicos;
 	}
 
 }

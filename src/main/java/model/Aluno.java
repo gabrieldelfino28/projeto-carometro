@@ -1,12 +1,21 @@
 package model;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Entity(name="aluno")
-public class Aluno {
+@Entity
+@Table(name="aluno")
+public class Aluno implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -15,6 +24,15 @@ public class Aluno {
 	private int anoFormacao;
 	private String cursoFormado;
 	private long ra;
+	
+	@OneToMany(mappedBy = "aluno")
+	private List<Comentario> comentarios;
+	
+	@OneToMany(mappedBy = "aluno")
+	private List<Historico> historicos;
+	
+	@OneToMany(mappedBy = "aluno")
+	private List<Link> links;
 	
 	public Aluno() {
 		super();
@@ -62,6 +80,38 @@ public class Aluno {
 
 	public void setRa(long ra) {
 		this.ra = ra;
+	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public List<Historico> getHistoricos() {
+		return historicos;
+	}
+
+	public void setHistoricos(List<Historico> historicos) {
+		this.historicos = historicos;
+	}
+
+	public List<Link> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}
+
+	@Override
+	public String toString() {
+		return "Aluno -> [id=" + id + ", nome=" + nome + ", anoFormacao=" + anoFormacao + ", cursoFormado=" + cursoFormado
+				+ ", ra=" + ra + ", comentarios=" + comentarios.toString() + ", historicos=" + historicos.toString() + ", links=" + links.toString()
+				+ "]";
 	}	
+	
 	
 }

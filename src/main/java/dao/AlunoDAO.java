@@ -6,6 +6,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import model.Aluno;
+import model.Comentario;
+import model.Historico;
+import model.Link;
 
 public class AlunoDAO implements IDAO<Aluno> {
 	
@@ -49,18 +52,32 @@ public class AlunoDAO implements IDAO<Aluno> {
 	@Override
 	public List<Aluno> listar() {
 		EntityManager em = mf.createEntityManager();
-		List<Aluno> alunos = em.createQuery("SELECT a FROM Aluno a", Aluno.class).getResultList();
+		List<Aluno> alunos = em.createQuery("SELECT a FROM aluno a", Aluno.class).getResultList();
 		em.close();
 		return alunos;
 	}
 
 	@Override
-	public List<Aluno> apenasUm(String nome) {
+	public List<Aluno> apenasUm(Long id) {
+		LinkDAO lDAO = new LinkDAO();
+		ComentarioDAO cDAO = new ComentarioDAO();
+		HistoricoDAO hDAO = new HistoricoDAO();
+		
 		EntityManager em = mf.createEntityManager();
-		List<Aluno> alunos = em.createQuery("SELECT a FROM Aluno a WHERE a.nome LIKE :nome", Aluno.class)
-				.setParameter("nome", "%" + nome + "%")
+		List<Aluno> alunos = em.createQuery("SELECT a FROM Aluno a WHERE a.id LIKE :id", Aluno.class)
+				.setParameter("id", id)
 				.getResultList();
 		em.close();
+		
+		List<Link> links = lDAO.apenasUm(id);
+		List<Comentario> coms = cDAO.apenasUm(id);
+		List<Historico> his = hDAO.apenasUm(id);
+		
+		for (Aluno al : alunos) {
+			al.setLinks(links);
+			al.setComentarios(coms);
+			al.setHistoricos(his);
+		}
 		return alunos;
 	}
 	

@@ -56,10 +56,10 @@ public class LinkDAO implements IDAO<Link>{
 	}
 
 	@Override
-	public List<Link> apenasUm(String nomeRede) {
+	public List<Link> apenasUm(Long aluno_id) {
 		EntityManager em = mf.createEntityManager();
-		List<Link> links = em.createQuery("SELECT l FROM Link l WHERE l.nomeRede LIKE :nomeRede", Link.class)
-				.setParameter("nomeRede", "%" + nomeRede + "%")
+		List<Link> links = em.createQuery("SELECT l FROM Link l WHERE l.aluno_id LIKE :aluno_id", Link.class)
+				.setParameter("aluno_id",aluno_id)
 				.getResultList();
 		em.close();
 		return links;
