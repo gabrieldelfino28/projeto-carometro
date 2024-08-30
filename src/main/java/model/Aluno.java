@@ -1,12 +1,15 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,14 +28,19 @@ public class Aluno implements Serializable {
 	private String cursoFormado;
 	private long ra;
 	
-	@OneToMany(mappedBy = "aluno")
-	private List<Comentario> comentarios;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="aluno_id")
+	private List<Comentario> comentarios = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "aluno")
-	private List<Historico> historicos;
 	
-	@OneToMany(mappedBy = "aluno")
-	private List<Link> links;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="aluno_id")
+	private List<Historico> historicos = new ArrayList<>();
+	
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="aluno_id")
+	private List<Link> links = new ArrayList<>();
 	
 	public Aluno() {
 		super();
@@ -89,7 +97,7 @@ public class Aluno implements Serializable {
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
-
+	
 	public List<Historico> getHistoricos() {
 		return historicos;
 	}
@@ -97,7 +105,7 @@ public class Aluno implements Serializable {
 	public void setHistoricos(List<Historico> historicos) {
 		this.historicos = historicos;
 	}
-
+	
 	public List<Link> getLinks() {
 		return links;
 	}
@@ -108,10 +116,8 @@ public class Aluno implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Aluno -> [id=" + id + ", nome=" + nome + ", anoFormacao=" + anoFormacao + ", cursoFormado=" + cursoFormado
-				+ ", ra=" + ra + ", comentarios=" + comentarios.toString() + ", historicos=" + historicos.toString() + ", links=" + links.toString()
+		return "Aluno [id=" + id + ", nome=" + nome + ", anoFormacao=" + anoFormacao + ", cursoFormado=" + cursoFormado
+				+ ", ra=" + ra + ", \ncomentarios=" + comentarios + ", \nhistoricos=" + historicos + ", \nlinks=" + links
 				+ "]";
-	}	
-	
-	
+	}
 }

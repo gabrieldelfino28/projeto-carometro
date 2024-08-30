@@ -1,16 +1,20 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.hibernate.Hibernate;
+
+
 import model.Aluno;
-import model.Comentario;
-import model.Historico;
-import model.Link;
 
 public class AlunoDAO implements IDAO<Aluno> {
+	/*
+	 * Não foi necessário usar as outras DAO's
+	 * */
 	
 	EntityManagerFactory mf = Persistence.createEntityManagerFactory ("HibJPA");
 	
@@ -50,34 +54,42 @@ public class AlunoDAO implements IDAO<Aluno> {
 	}
 
 	@Override
-	public List<Aluno> listar() {
+	public List<Aluno> listar() {	
 		EntityManager em = mf.createEntityManager();
-		List<Aluno> alunos = em.createQuery("SELECT a FROM aluno a", Aluno.class).getResultList();
-		em.close();
+		List<Aluno> alunos = new ArrayList<>();
+		try {
+			alunos = em.createQuery("SELECT a FROM Aluno a ", Aluno.class).getResultList();
+			for (Aluno aluno : alunos) {
+				Hibernate.initialize(aluno.getComentarios());
+				Hibernate.initialize(aluno.getHistoricos());
+				Hibernate.initialize(aluno.getLinks());
+			}
+		} catch (Exception e) {
+			System.err.println(e.getLocalizedMessage());
+		} finally {
+			em.close();
+		}
 		return alunos;
 	}
 
 	@Override
 	public List<Aluno> apenasUm(Long id) {
-		LinkDAO lDAO = new LinkDAO();
-		ComentarioDAO cDAO = new ComentarioDAO();
-		HistoricoDAO hDAO = new HistoricoDAO();
 		
 		EntityManager em = mf.createEntityManager();
-		List<Aluno> alunos = em.createQuery("SELECT a FROM Aluno a WHERE a.id LIKE :id", Aluno.class)
-				.setParameter("id", id)
-				.getResultList();
-		em.close();
-		
-		List<Link> links = lDAO.apenasUm(id);
-		List<Comentario> coms = cDAO.apenasUm(id);
-		List<Historico> his = hDAO.apenasUm(id);
-		
-		for (Aluno al : alunos) {
-			al.setLinks(links);
-			al.setComentarios(coms);
-			al.setHistoricos(his);
+		List<Aluno> alunos = new ArrayList<>();
+		try {
+			alunos = em.createQuery("SELECT a FROM Aluno a WHERE a.id LIKE :id", Aluno.class).setParameter("id", id).getResultList();
+			for (Aluno aluno : alunos) {
+				Hibernate.initialize(aluno.getComentarios());
+				Hibernate.initialize(aluno.getHistoricos());
+				Hibernate.initialize(aluno.getLinks());
+			}
+		} catch (Exception e) {
+			System.err.println(e.getLocalizedMessage());
+		} finally {
+			em.close();
 		}
+		
 		return alunos;
 	}
 	

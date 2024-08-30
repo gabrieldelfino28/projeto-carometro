@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,22 +23,18 @@ public class Historico implements Serializable {
 	private LocalDate dataDesligamento;
 	private String funcao;
 
-	@ManyToOne()
-	private Aluno aluno;
-
 	public Historico() {
 		super();
 	}
 
 	public Historico(String nomeEmpresa, String cargo, LocalDate dataContratacao, LocalDate dataDesligamento,
-			String funcao, Aluno aluno) {
+			String funcao) {
 		super();
 		this.nomeEmpresa = nomeEmpresa;
 		this.cargo = cargo;
 		this.dataContratacao = dataContratacao;
 		this.dataDesligamento = dataDesligamento;
 		this.funcao = funcao;
-		this.aluno = aluno;
 	}
 
 	public long getId() {
@@ -86,11 +81,11 @@ public class Historico implements Serializable {
 		this.funcao = funcao;
 	}
 
-	public Aluno getAluno() {
-		return aluno;
+	@Override
+	public String toString() {
+		return "Historico -> [id=" + id + ", nomeEmpresa=" + nomeEmpresa + ", cargo=" + cargo + ", dataContratacao="
+				+ dataContratacao + ", dataDesligamento=" + dataDesligamento + ", funcao=" + funcao + "]";
 	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
+	
+	
 }

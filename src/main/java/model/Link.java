@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,19 +17,16 @@ public class Link implements Serializable {
 	private long id;
 	private String nomeRede;
 	private String link;
-
+	
+	
 	public Link() {
 		super();
 	}
 
-	@ManyToOne
-	private Aluno aluno;
-
-	public Link(String nomeRede, String link, Aluno aluno) {
+	public Link(String nomeRede, String link) {
 		super();
 		this.nomeRede = nomeRede;
 		this.link = link;
-		this.aluno = aluno;
 	}
 
 	public long getId() {
@@ -53,11 +49,8 @@ public class Link implements Serializable {
 		this.link = link;
 	}
 
-	public Aluno getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
+	@Override
+	public String toString() {
+		return "Link -> [id=" + id + ", nomeRede=" + nomeRede + ", link=" + link + "]";
 	}
 }

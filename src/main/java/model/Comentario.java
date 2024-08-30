@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,19 +19,15 @@ public class Comentario implements Serializable {
 	private String categoria;
 	private LocalDate data = LocalDate.now();
 	private String conteudo;
-
+	
 	public Comentario() {
 		super();
 	}
 
-	@ManyToOne
-	private Aluno aluno;
-
-	public Comentario(String categoria, String conteudo, Aluno aluno) {
+	public Comentario(String categoria, String conteudo) {
 		super();
 		this.categoria = categoria;
 		this.conteudo = conteudo;
-		this.aluno = aluno;
 	}
 
 	public long getId() {
@@ -63,11 +58,9 @@ public class Comentario implements Serializable {
 		this.conteudo = conteudo;
 	}
 
-	public Aluno getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
+	@Override
+	public String toString() {
+		return "Comentario -> [id=" + id + ", categoria=" + categoria + ", data=" + data + ", conteudo=" + conteudo
+				+ "]";
 	}
 }

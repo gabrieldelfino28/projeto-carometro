@@ -1,7 +1,6 @@
 package view;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,66 +15,65 @@ public class Main {
 	public static void main(String[] args) {
 		AlunoController control = new AlunoController();
 		Scanner scanner = new Scanner(System.in);
+		List<Aluno> alunos;
 		String option = " ";
-		Aluno al;
+		Long idAluno;
+		Aluno al = new Aluno();
 		Historico h;
 		Link link;
 		Comentario c;
+		
 		String menu = "Menu: " + "\n1- Novo Registro no Carômetro." + "\n2- Atualizar Registro no Carômetro."
-				+ "\n3- Consultar um Registro." + "\n4- Listar todos." + "\n9- Sair.";
+				+ "\n3- Consultar um Registro." + "\n4- Listar todos." + "\n5- Remover um Registro." + "\n9- Sair.";
 		do {
 			System.out.println(menu);
 			System.out.print("\nEscolha uma opção: ");
 			option = scanner.next();
 			switch (option) {
 			case "1":
-				al = new Aluno("Cleiton Santana", 2030, "ADS 2", 11102345);
-
 				LocalDate dataCont = LocalDate.of(2017, 6, 17);
 				LocalDate dataClose = LocalDate.of(2021, 7, 30);
-				h = new Historico("Google", "Analista de TI", dataCont, dataClose, "Desenvolvedor Junior", al);
-				List<Historico> his = new ArrayList<Historico>();
-				his.add(h);
-				his.add(h);
 
-				link = new Link("github", "https://github.com/gabrieldelfino28", al);
-				List<Link> links = new ArrayList<Link>();
-				links.add(link);
-				links.add(link);
-
-				c = new Comentario("Fatec", "Socorro", al);
-				List<Comentario> coms = new ArrayList<Comentario>();
-				coms.add(c);
-				coms.add(c);
-
-				al.setComentarios(coms);
-				al.setHistoricos(his);
-				al.setLinks(links);
+				al = new Aluno("Cleiton Santana", 2030, "ADS 2", 11102345);
+				link = new Link("github", "https://github.com/gabrieldelfino28");
+				h = new Historico("Google", "Analista de TI", dataCont, dataClose, "Desenvolvedor Junior");
+				c = new Comentario("Fatec", "Socorro");
+				
+				al.getComentarios().add(c);
+				al.getHistoricos().add(h);
+				al.getLinks().add(link);
 				control.inserirAluno(al);
-				control.inserirComentario(c);
-				control.inserirHistorico(h);
-				control.inserirLink(link);
 				System.out.println("\nCarometro Cadastrado.");
 				break;
 			case "2":
-				System.out.println("\n.");
+				System.out.println("\nCarometro Atualizado.");
 				break;
 			case "3":
-				//Long idAluno = 2l;
+				System.out.println("Insira o ID do aluno: ");
+				idAluno = scanner.nextLong();
+				alunos = control.buscarAluno(idAluno);
+				if (!alunos.isEmpty()) {
+					for (Aluno aluno : alunos) {
+						System.out.println(aluno.toString());
+					}
+				} else {
+					System.err.println("Registro não encontrado.");
+				}
+				break;
+			case "4":
 				try {
-					//List<Aluno> alunos = control.buscarAluno(idAluno);
-					List<Aluno> alunos = control.listarTodos();
+					alunos = control.listarTodos();
 					for (Aluno aluno : alunos) {
 						System.out.println(aluno.toString());
 					}
 				} catch (Exception e) {
-					System.err.println(e.getMessage());
-					// TODO: handle exception
+					System.err.println(e.getLocalizedMessage());
 				}
-
 				break;
-			case "4":
-				System.out.println("\n.");
+			case "5":
+				System.out.println("Insira o ID do aluno: ");
+				idAluno = scanner.nextLong();
+				control.removerAluno(idAluno);
 				break;
 			case "9":
 				System.err.println("\nSaindo da Aplicacao...");
