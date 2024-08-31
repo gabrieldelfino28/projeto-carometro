@@ -14,44 +14,46 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="aluno")
+@Table(name = "aluno")
 public class Aluno implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String nome;
 	private int anoFormacao;
 	private String cursoFormado;
 	private long ra;
-	
+	private String status;
+	private String foto;
+
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="aluno_id")
+	@JoinColumn(name = "aluno_id")
 	private List<Comentario> comentarios = new ArrayList<>();
-	
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="aluno_id")
+	@JoinColumn(name = "aluno_id")
 	private List<Historico> historicos = new ArrayList<>();
-	
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="aluno_id")
+	@JoinColumn(name = "aluno_id")
 	private List<Link> links = new ArrayList<>();
-	
+
 	public Aluno() {
 		super();
 	}
 
-	public Aluno(String nome, int anoFormacao, String cursoFormado, long ra) {
+	public Aluno(String nome, int anoFormacao, String cursoFormado, long ra, String status, String foto) {
 		super();
 		this.nome = nome;
 		this.anoFormacao = anoFormacao;
 		this.cursoFormado = cursoFormado;
 		this.ra = ra;
+		this.status = status;
+		this.foto = foto;
 	}
 
 	public Long getId() {
@@ -90,6 +92,22 @@ public class Aluno implements Serializable {
 		this.ra = ra;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
 	public List<Comentario> getComentarios() {
 		return comentarios;
 	}
@@ -97,7 +115,7 @@ public class Aluno implements Serializable {
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
-	
+
 	public List<Historico> getHistoricos() {
 		return historicos;
 	}
@@ -105,7 +123,7 @@ public class Aluno implements Serializable {
 	public void setHistoricos(List<Historico> historicos) {
 		this.historicos = historicos;
 	}
-	
+
 	public List<Link> getLinks() {
 		return links;
 	}
@@ -116,8 +134,8 @@ public class Aluno implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Aluno [id=" + id + ", nome=" + nome + ", anoFormacao=" + anoFormacao + ", cursoFormado=" + cursoFormado
-				+ ", ra=" + ra + ", \ncomentarios=" + comentarios + ", \nhistoricos=" + historicos + ", \nlinks=" + links
-				+ "]";
+		return "Aluno {id=" + id + ", nome=" + nome + ", anoFormacao=" + anoFormacao + ", cursoFormado=" + cursoFormado
+				+ ", ra=" + ra + "status=" + status + ", fotoUrl=" + foto + "\nComentarios -> " + comentarios
+				+ ",\nHistoricos -> " + historicos + "\nLinks -> " + links + "}";
 	}
 }

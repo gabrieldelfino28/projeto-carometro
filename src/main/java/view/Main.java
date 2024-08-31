@@ -15,10 +15,10 @@ public class Main {
 	public static void main(String[] args) {
 		AlunoController control = new AlunoController();
 		Scanner scanner = new Scanner(System.in);
+		Aluno al = new Aluno();
 		List<Aluno> alunos;
 		String option = " ";
 		Long idAluno;
-		Aluno al = new Aluno();
 		Historico h;
 		Link link;
 		Comentario c;
@@ -31,10 +31,11 @@ public class Main {
 			option = scanner.next();
 			switch (option) {
 			case "1":
+				String url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpdg4hhXE_dm1EUlDETK44c-7siaHGTGdENQ&s";
 				LocalDate dataCont = LocalDate.of(2017, 6, 17);
 				LocalDate dataClose = LocalDate.of(2021, 7, 30);
 
-				al = new Aluno("Cleiton Santana", 2030, "ADS 2", 11102345);
+				al = new Aluno("Cleiton Santana", 2030, "ADS 2", 11102345, "Pendente", url);
 				link = new Link("github", "https://github.com/gabrieldelfino28");
 				h = new Historico("Google", "Analista de TI", dataCont, dataClose, "Desenvolvedor Junior");
 				c = new Comentario("Fatec", "Socorro");
